@@ -14,7 +14,7 @@ import styled from "styled-components";
  */
 
 const Text = (props) => {
-  const { bold, color, size, children, margin, hover, bg } = props;
+  const { bold, color, size, children, margin, hover, bg, border, bw } = props;
 
   const styles = { 
     bold: bold, 
@@ -23,6 +23,8 @@ const Text = (props) => {
     margin: margin, 
     hover: hover, 
     bg: bg,
+    border: border,
+    bw: bw,
   };
 
   return(
@@ -38,6 +40,8 @@ Text.defaultProps = {
   margin: false,
   hover: false,
   bg: false,
+  border: false,
+  bw: false,
 };
 
 const P = styled.p`
@@ -45,7 +49,10 @@ const P = styled.p`
 
   font-size: ${(props) => props.size};
   font-weight: ${(props) => (props.bold ? "600" : "400")};
-  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
+  ${(props) => (props.margin ? `margin: ${props.margin}` : '')};
+  ${(props) => (props.border ? `border: ${props.border};` : "")};
+  ${(props) => (props.bw ? `border-width: ${props.bw};` : "")};
+
 `;
 
 export default Text;

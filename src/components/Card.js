@@ -3,6 +3,7 @@ import React from "react";
 import Grid from "../elements/Grid";
 import Text from "../elements/Text";
 import Input from "../elements/Input";
+import Image from "../elements/Image"
 
 import CommentWrite from "./CommentWrite";
 import CommentList from "./CommentList";
@@ -13,12 +14,22 @@ const Card = (props) => {
     return(
         <React.Fragment>
             <Grid padding="0px 100px">
-                <Grid>
-                    <div>이미지 영역</div>
+                <Grid center>
+                    <Text 
+                    size="20px" 
+                    bold 
+                    margin="20px 0px" 
+                    border="#222831 solid "
+                    bw="0px 0px 10px 0px"
+                    >상품 작성</Text>
                 </Grid>
 
-                <Grid is_flex>
-                    <Text bold>작성자</Text>
+                <Grid>
+                    <Image shape="rectangle">이미지 영역</Image>
+                </Grid>
+
+                <Grid is_flex width="auto">
+                    <Text bold width="100px">작성자</Text>
                     <Text >라푸</Text>
                 </Grid>
 
@@ -37,12 +48,12 @@ const Card = (props) => {
                     <Text >말 안듣는 주인님 바꾸려구요</Text>
                 </Grid>
 
-                <Grid padding="16px 0px" is_flex>
+                <Grid is_flex>
                     <Grid is_flex width="auto">
-                        <div>하트</div>
-                        <div>하트개수</div>
+                        <Text size="30px" margin="0px">♡</Text>
+                        <Text size="12px">{props.like_cnt}개</Text>
                     </Grid>
-                    <div>보고있는 사람</div>
+                    <Image>보고있는 사람</Image>
                 </Grid>
 
                 <Grid>
@@ -55,6 +66,20 @@ const Card = (props) => {
             </Grid>
         </React.Fragment>
     )
+}
+
+    Card.defaultProps = {
+    user_info: {
+        user_name: "누구",
+        user_profile: "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
+    },
+    image_url:"https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
+    contents: "어후 피곤해! 어흐↗ 어흐으↗",
+    comment_cnt: 10,
+    insert_dt: "2021-02-27 10:00:00",
+    is_me: false,
+    like_cnt: 10,
+    is_like: false,
 }
 
 export default Card;
