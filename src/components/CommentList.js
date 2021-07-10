@@ -10,7 +10,7 @@ const CommentList = (props) => {
 
     return(
         <React.Fragment>
-            <Grid>
+            <Grid padding="0px 100px">
                 <CommentItem/>
             </Grid>
         </React.Fragment>
