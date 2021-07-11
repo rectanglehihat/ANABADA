@@ -7,9 +7,9 @@ import heart_gray from "../shared/heart_gray.png";
 
 const HeartButton = (props) => {
 
-    const icon_url = props.is_like? heart_pink : heart_gray;
+    const icon_url = props.is_like ? heart_pink : heart_gray;
 
-    return(
+    return (
         <React.Fragment>
             <Heart onClick={props._onClick} icon_url={icon_url}></Heart>
         </React.Fragment>
