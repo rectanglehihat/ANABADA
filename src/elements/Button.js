@@ -53,7 +53,7 @@ const FloatButton = styled.button`
     color: #ffffff;
 
     box-sizing: border-box;
-    font-size: 36px;
+    font-size: 52px;
     font-weight: 800;
     position: fixed;
     bottom: 50px;
@@ -63,5 +63,6 @@ const FloatButton = styled.button`
     border-radius: 50px;
     vertical-align: middle;
 `;
+
 
 export default Button;

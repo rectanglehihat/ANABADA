@@ -14,15 +14,13 @@ import styled from "styled-components";
  */
 
 const Text = (props) => {
-  const { bold, color, size, children, margin, hover, bg, border, bw } = props;
+  const { bold, color, size, children, margin, border, bw } = props;
 
   const styles = { 
     bold: bold, 
     color: color, 
     size: size, 
     margin: margin, 
-    hover: hover, 
-    bg: bg,
     border: border,
     bw: bw,
   };
@@ -38,8 +36,6 @@ Text.defaultProps = {
   color: "#222831",
   size: "14px",
   margin: false,
-  hover: false,
-  bg: false,
   border: false,
   bw: false,
 };

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Grid from "./Grid";
 import Text from "./Text";
+import Image from "./Image"
 
 // 인풋 컴포넌트
 /**
@@ -19,7 +20,7 @@ import Text from "./Text";
  * @returns 
  */
 const Input = (props) => {
-  const {label, placeholder, _onChange, type, multiLine, value, is_submit, onSubmit,} = props;
+  const {label, placeholder, _onChange, type, multiLine, value, is_submit, onSubmit, centerCircle} = props;
 
   if (multiLine) {
     return (
@@ -83,5 +84,6 @@ const ElInput = styled.input`
   padding: 12px 4px;
   box-sizing: border-box;
 `;
+
 
 export default Input;
