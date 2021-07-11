@@ -1,6 +1,6 @@
 import React from "react";
 import {BrowserRouter, Route} from "react-router-dom";
-import styled, {keyframes} from "styled-components";
+import styled from "styled-components";
 
 import Signup from "../pages/Signup";
 import PostWrite from "../pages/PostWrite"

@@ -5,8 +5,6 @@ import Text from "../elements/Text";
 import Input from "../elements/Input";
 import Image from "../elements/Image"
 
-import CommentWrite from "./CommentWrite";
-import CommentList from "./CommentList";
 import HeartButton from "./HeartButton";
 
 

@@ -79,6 +79,7 @@ const Signup = (props) => {
 
         <Button padding="16px" margin="24px 0px">회원가입하기</Button>
       </Grid>
+      
     </React.Fragment>
     )
 }

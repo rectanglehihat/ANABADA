@@ -17,6 +17,7 @@ const Image = (props) => {
         )
     }
 
+    //회원가입 이미지 중앙배치 위해 새로 생성
     if(shape === "centerCircle"){
         return (
             <CenterCircle {...styles}></CenterCircle>
@@ -82,6 +83,7 @@ const ImageCircle = styled.div`
     margin: 4px;
 `;
 
+//회원가입 원형 이미지 중앙 정렬(위의 ImageCircle과 마진만 다름)
 const CenterCircle = styled.div`
     --size: ${(props) => props.size}px;
     width: var(--size);

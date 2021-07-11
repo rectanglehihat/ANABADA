@@ -11,10 +11,12 @@ const PostDetail = (props) => {
 
     return(
         <React.Fragment>
+
             <Card/>
             <CommentWrite/>
             <CommentList/>
             <Button is_float text="+"></Button>
+            
         </React.Fragment>
     )
 }

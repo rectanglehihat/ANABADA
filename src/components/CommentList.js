@@ -23,7 +23,7 @@ CommentList.defaultProps = {
 
 export default CommentList;
 
-
+//댓글 아이템 하나(export안해도 됨. 위에서 map돌림)
 const CommentItem = (props) => {
 
     const { user_profile, user_name, user_id, post_id, insert_dt, contents } = props;

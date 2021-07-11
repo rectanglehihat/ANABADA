@@ -61,4 +61,5 @@ const GridBox = styled.div`
   ${(props) => (props.center ? `text-align: center;` : "")}
 `;
 
+
 export default Grid;

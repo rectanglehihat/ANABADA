@@ -60,5 +60,4 @@ const PostWrite = (props) => {
     )
 }
 
-
 export default PostWrite;
