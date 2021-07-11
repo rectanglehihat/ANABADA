@@ -4,11 +4,9 @@ import './index.css';
 import App from './shared/App';
 import reportWebVitals from './reportWebVitals';
 
-import FontStyles from "./fonts/FontStyles";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <FontStyles /> */}
     <App />
   </React.StrictMode>,
   document.getElementById('root')
