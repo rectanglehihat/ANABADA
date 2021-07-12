@@ -36,31 +36,28 @@ const initialCard = {
 const getCardDB = () => {
     return function (dispatch, getState, { history }) {
     axios
-        .get('http://localhost:4000/products')
+        .post('http://localhost:4000/products/post')
         .then((res) => {
             console.log(res);
-        //   let card_list = [];
 
-          let _card = res.data;
-        //   let card = {
-        //       id: res.id,
-        //       user_name: _card.nickname,
-        //       contents: _card.content,
-        //       image_url: _card.image,
-        //       price: _card.price,
-        //       title: _card.title,
-        //       insert_dt: _card.date,
-        //   }
+            let _card = res.data;
+            console.log(_card);
 
-        //   card_list.push(_card);
-
-          console.log(_card);
-
-          dispatch(setCard(_card));
-          console.log(res.data);
+            dispatch(setCard(_card));
+            console.log(res.data);
         });
     };
   };
+
+const addCardDB = () => {
+    return function (dispatch, getState, { history }) {
+        axios
+            .get('http://localhost:4000/products')
+            .then((res) => {
+
+            })
+    }
+}
 
 //handleActions(리듀서 대신 편하게 만들기)
 export default handleActions({

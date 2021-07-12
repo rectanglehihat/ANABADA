@@ -15,8 +15,6 @@ const PostList = (props) => {
 
     React.useEffect(() => {
         dispatch(cardActions.getCardDB());
-
-        
     }, [])
 
     return (
