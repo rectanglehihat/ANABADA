@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {actionCreators as cardActions} from "../redux/modules/card";
+import { actionCreators as cardActions } from "../redux/modules/card";
 
 import Button from "../elements/Button"
 import Grid from "../elements/Grid";
@@ -16,7 +16,7 @@ const PostList = (props) => {
     React.useEffect(() => {
         dispatch(cardActions.getCardDB());
 
-        
+
     }, [])
 
     return (
@@ -24,7 +24,7 @@ const PostList = (props) => {
             <Grid>
                 {/* c는 게시글에 대한 모든 정보 들어감 */}
                 {card_list.map((c, idx) => {
-                    return <Card key={c.id} {...c}/>
+                    return <Card key={c.id} {...c} />
                 })}
             </Grid>
 
@@ -33,7 +33,7 @@ const PostList = (props) => {
                 _onClick={() => {
                     console.log("게시글 작성으로 가기");
                 }}
-                >
+            >
                 +
             </Button>
         </React.Fragment>
