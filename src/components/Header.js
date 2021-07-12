@@ -35,9 +35,13 @@ const Header = () => {
     //   로그인 중이 아니라면 로그인 전 헤더를 보여줍니다.
     return (
         <React.Fragment>
-            <Grid is_flex padding="4px 16px">
+            <Grid is_flex padding="10px 100px">
                 <Grid>
-                    <Text margin="0px" size="24px" bold>
+                    <Text 
+                    margin="0px" 
+                    size="24px" 
+                    bold 
+                    onClick={() => console.log("메인으로 가기") }>
                         아나바다
                     </Text>
                 </Grid>
@@ -45,17 +49,20 @@ const Header = () => {
                     <Search />
                 </Grid> */}
                 <Grid is_flex>
-                    <Button
-                    // _onClick={() => {
-                    //     history.push("/login");
-                    // }}
+                    <Button 
+                    margin=" 0 10px"
+                     _onClick={() => {
+                         console.log("로그인으로 가기")
+                        //  history.push("/login");
+                     }}
                     >
                         로그인
                     </Button>
                     <Button
-                    // _onClick={() => {
+                     _onClick={() => {
+                        console.log("회원가입으로 가기")
                     //     history.push("/signup");
-                    // }}
+                     }}
                     >
                         회원가입
                     </Button>
