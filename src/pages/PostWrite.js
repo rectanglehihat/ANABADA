@@ -6,8 +6,9 @@ import Text from "../elements/Text";
 import Input from "../elements/Input";
 import Button from "../elements/Button";
 import Image from "../elements/Image";
-
 import Upload from "../shared/Upload";
+
+import { useSelector } from "react-redux";
 
 
 const PostWrite = (props) => {
@@ -52,7 +53,13 @@ const PostWrite = (props) => {
                 </Grid>
 
                 <Grid padding="10px 0px 30px 0">
-                    <Button padding="16px">게시글 등록</Button>
+                    <Button 
+                    padding="16px"
+                    _onClick={() => {
+                        console.log("포스트리스트로 가가")
+                        // history.pushState("/post")
+                    }}
+                    >게시글 등록</Button>
                 </Grid>
             </Grid>
 

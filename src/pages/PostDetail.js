@@ -15,7 +15,14 @@ const PostDetail = (props) => {
             <Card/>
             <CommentWrite/>
             <CommentList/>
-            <Button is_float text="+"></Button>
+            <Button
+                is_float
+                _onClick={() => {
+                    console.log("게시글 작성으로 가기");
+                }}
+                >
+                +
+            </Button>
             
         </React.Fragment>
     )
