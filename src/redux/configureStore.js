@@ -4,7 +4,7 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import Card from "./modules/card";
-import Post from "./modules/post";
+// import Post from "./modules/post";
 
 // history를 스토어에서도 쓸 수 있도록 
 export const history = createBrowserHistory();
@@ -12,7 +12,7 @@ export const history = createBrowserHistory();
 // 리듀서 여러개일 때 하나로 묶기
 const rootReducer = combineReducers({
   card: Card,
-  post: Post,
+  // post: Post,
   router: connectRouter(history),
 });
 
