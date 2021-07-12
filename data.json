@@ -1,15 +1,28 @@
 {
-  "products": [
+  "product": [
     {
       "id": 1,
       "nickname": "유저다",
       "title": "첫 게시물",
       "content": "뭐든 팝니다",
-      "image": "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
-      "like": "좋아요 개수? 개나줘버려",
-      "price": "1,000,000",
-      "date": "2021-02-27 10:00:00"
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6YIWFgfQVjfDvCsLGkOM2TFahkTF1ylRIow&usqp=CAU",
+      "price": "1,000,000"
+    },
+    {
+      "id": 2,
+      "nickname": "유저다",
+      "title": "두번째 게시물",
+      "content": "22222",
+      "image": "https://image.fmkorea.com/files/attach/new/20201108/486616/1958591723/3188718119/d3226b2610995a6c5bac97ee76ae7801.jpeg",
+      "price": "2,000,000"
+    },
+    {
+      "id": 3,
+      "nickname": "유저다",
+      "title": "세번째 게시물",
+      "content": "33333",
+      "image": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160424_18%2Fsweetyura_1461495193028KQi1p_JPEG%2FattachImage_3676377865.jpeg&type=sc960_832",
+      "price": "3,000,000"
     }
   ]
 }
-

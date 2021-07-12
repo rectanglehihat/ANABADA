@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-    const {text, _onClick, is_float, children, margin, width, padding, bg} = props;
+    const {text, _onClick, is_float, children, margin, width, padding, bg, bottom} = props;
 
     const styles = {
         margin: margin,
         width: width,
         padding: padding,
         bg: bg,
+        bottom: bottom,
       };
 
     if (is_float){
@@ -24,7 +25,6 @@ const Button = (props) => {
             <ElButton {...styles} onClick={_onClick}>{text ? text : children}</ElButton>
         </React.Fragment>
     )
-
 
 }
 
@@ -61,6 +61,26 @@ const FloatButton = styled.button`
     font-weight: 800;
     position: fixed;
     bottom: 50px;
+    /* bottom: ${(props) => props.bottom}; */
+    right: 16px;
+    text-align: center;
+    border: none;
+    border-radius: 50px;
+    vertical-align: middle;
+`;
+
+const EditFloatButton = styled.button`
+    width: 50px;
+    height: 50px;
+    background-color: #212121;
+    color: #ffffff;
+
+    box-sizing: border-box;
+    font-size: 52px;
+    font-weight: 800;
+    position: fixed;
+    bottom: 120px;
+    bottom: ${(props) => props.bottom};
     right: 16px;
     text-align: center;
     border: none;

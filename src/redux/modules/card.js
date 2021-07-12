@@ -26,9 +26,9 @@ const initialCard = {
     title: "주인 팝니다",
     contents: "말 안듣는 주인 바꿉니다",
     price: "백마넌",
-    is_like: false,
-    like_cnt: 10,
     insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    // is_like: false,
+    // like_cnt: 10,
     // is_me: false,
 }
 
@@ -36,7 +36,7 @@ const initialCard = {
 const getCardDB = () => {
     return function (dispatch, getState, { history }) {
     axios
-        .post('http://localhost:4000/products/post')
+        .get('http://localhost:4000/product')
         .then((res) => {
             console.log(res);
 
@@ -49,13 +49,23 @@ const getCardDB = () => {
     };
   };
 
-const addCardDB = () => {
+const addCardDB = (title, content, image, nickname, price) => {
     return function (dispatch, getState, { history }) {
-        axios
-            .get('http://localhost:4000/products')
-            .then((res) => {
+    axios
+        .post('http://localhost:4000/product',
+            {title, content, image, nickname, price},
+            // {headers:{}}
+        )
+        .then((res) => {
+            console.log(res);
 
-            })
+            let _card = res.data;
+            console.log(_card);
+
+            dispatch(addCard(_card));
+            console.log(res.data);
+            history.replace("/post");
+        });
     }
 }
 
@@ -67,7 +77,7 @@ export default handleActions({
 
     [ADD_CARD]: (state, action) => produce(state, (draft) => {
         //배열에 제일 앞에 붙이니까 unshift사용
-        draft.list.unshift(action.payload.post);
+        draft.list.unshift(action.payload.card);
     }),
 
 
@@ -79,6 +89,7 @@ const actionCreators = {
     setCard,
     addCard,
     getCardDB,
+    addCardDB,
   };
   
 export { actionCreators };
