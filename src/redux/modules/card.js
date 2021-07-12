@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
+import moment from "moment";
 
 
 //Actions
@@ -27,24 +28,44 @@ const initialCard = {
     price: "백마넌",
     is_like: false,
     like_cnt: 10,
-    is_me: false,
-    insert_dt: "2021-02-27 10:00:00",
+    insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    // is_me: false,
 }
 
-//middleware(비동기)
-// const cardDB = (/products/:id) => {
-//     return function (dispatch, getState, {history}) {
-//       axios
-//         .get((), {
+// middleware(비동기)
+const getCardDB = () => {
+    return function (dispatch, getState, { history }) {
+    axios
+        .get('http://localhost:4000/products')
+        .then((res) => {
+            console.log(res);
+        //   let card_list = [];
 
-//         })
-//     }
+          let _card = res.data;
+        //   let card = {
+        //       id: res.id,
+        //       user_name: _card.nickname,
+        //       contents: _card.content,
+        //       image_url: _card.image,
+        //       price: _card.price,
+        //       title: _card.title,
+        //       insert_dt: _card.date,
+        //   }
 
+        //   card_list.push(_card);
+
+          console.log(_card);
+
+          dispatch(setCard(_card));
+          console.log(res.data);
+        });
+    };
+  };
 
 //handleActions(리듀서 대신 편하게 만들기)
 export default handleActions({
     [SET_CARD]: (state, action) => produce(state, (draft) => {
-
+        draft.list.push(...action.payload.card_list)
     }),
 
     [ADD_CARD]: (state, action) => produce(state, (draft) => {
@@ -60,6 +81,7 @@ export default handleActions({
 const actionCreators = {
     setCard,
     addCard,
+    getCardDB,
   };
   
 export { actionCreators };

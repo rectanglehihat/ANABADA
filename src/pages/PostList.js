@@ -1,16 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {actionCreators as cardActions} from "../redux/modules/card";
 
 import Button from "../elements/Button"
 import Grid from "../elements/Grid";
-
 import Card from "../components/Card";
 
 
 const PostList = (props) => {
+    const dispatch = useDispatch();
     const card_list = useSelector((state) => state.card.list)
 
     console.log(card_list)
+
+    React.useEffect(() => {
+        dispatch(cardActions.getCardDB());
+
+        
+    }, [])
 
     return (
         <React.Fragment>
