@@ -10,16 +10,16 @@ import HeartButton from "./HeartButton";
 
 const Card = (props) => {
 
-    return(
+    return (
         <React.Fragment>
             <Grid padding="0px 100px">
                 <Grid center>
-                    <Text 
-                    size="32px" 
-                    bold 
-                    margin="20px 0px" 
-                    border="#222831 solid "
-                    bw="0px 0px 10px 0px"
+                    <Text
+                        size="32px"
+                        bold
+                        margin="20px 0px"
+                        border="#222831 solid "
+                        bw="0px 0px 10px 0px"
                     >상 품 상 세</Text>
                 </Grid>
 
@@ -59,8 +59,8 @@ const Card = (props) => {
     )
 }
 
-    Card.defaultProps = {
-    image_url:"https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
+Card.defaultProps = {
+    image_url: "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
     user_name: "라푸",
     title: "주인 팝니다",
     contents: "말 안듣는 주인 바꿉니다",

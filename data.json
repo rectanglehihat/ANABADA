@@ -30,8 +30,18 @@
       "id" : 3,
       "contents" : "주인닮아서 더 귀여움"
     }
-  ]
-  
+  ],
 
-  
+  "products": [
+    {
+      "id": 1,
+      "nickname": "유저다",
+      "title": "첫 게시물",
+      "content": "뭐든 팝니다",
+      "image": "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
+      "like": "좋아요 개수? 개나줘버려",
+      "price": "1,000,000",
+      "date": "2021-02-27 10:00:00"
+    }
+  ]
 }
