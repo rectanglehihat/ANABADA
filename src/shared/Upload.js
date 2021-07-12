@@ -7,7 +7,7 @@ const Upload = (props) => {
     return (
         <React.Fragment>
             <Label className="input-file-button" for="input-file">사진업로드</Label>
-            <FileButton type="file" id="input-file" style={{display:"none"}}/>
+            <FileButton type="file" id="input-file" style={{ display: "none" }} />
         </React.Fragment>
     )
 }

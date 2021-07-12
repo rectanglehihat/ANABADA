@@ -5,13 +5,28 @@ import Text from "../elements/Text";
 import Input from "../elements/Input";
 import Image from "../elements/Image";
 
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as commentActions } from "../redux/modules/comment";
 
 const CommentList = (props) => {
+    const dispatch = useDispatch();
+    const comment_list = useSelector(state => state.comment.list);
 
-    return(
+    const { post_id } = props;
+
+    React.useEffect(() => {
+        if (!comment_list[post_id]) {
+            dispatch(commentActions.getCommentDB(post_id));
+        }
+    }, []);
+
+    if (!comment_list[post_id] || !post_id) {
+        return null;
+    }
+    return (
         <React.Fragment>
             <Grid padding="0px 100px">
-                <CommentItem/>
+                <CommentItem />
             </Grid>
         </React.Fragment>
     )
@@ -19,7 +34,7 @@ const CommentList = (props) => {
 
 CommentList.defaultProps = {
     post_id: null,
-  };
+};
 
 export default CommentList;
 
@@ -32,7 +47,7 @@ const CommentItem = (props) => {
             <Grid is_flex width="auto">
                 <Image>유저이미지</Image>
                 <Text bold>{user_name}</Text>
-                <Text  margin="10px">{contents}</Text>
+                <Text margin="10px">{contents}</Text>
             </Grid>
 
             <Grid is_flex width="auto">

@@ -9,14 +9,14 @@ import CommentList from "../components/CommentList"
 
 const PostDetail = (props) => {
 
-    return(
+    return (
         <React.Fragment>
 
-            <Card/>
-            <CommentWrite/>
-            <CommentList/>
+            <Card />
+            <CommentWrite />
+            <CommentList />
             <Button is_float text="+"></Button>
-            
+
         </React.Fragment>
     )
 }
