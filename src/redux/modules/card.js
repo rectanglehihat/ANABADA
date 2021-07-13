@@ -57,7 +57,6 @@ const getCardDB = () => {
   return function (dispatch, getState, { history }) {
     axios
       .get('http://wanos.shop/api/product')
-      // .get('http://localhost:4000/product')
       .then((res) => {
         console.log(res);
 
