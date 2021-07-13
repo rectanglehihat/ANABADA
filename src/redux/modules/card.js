@@ -6,6 +6,7 @@ import moment from "moment";
 //Actions
 const SET_CARD = "SET_CARD";
 const ADD_CARD = "ADD_CARD";
+const SET_PREVIEW = "SET_PREVIEW";
 
 const EDIT_POST = "EDIT_CARD";
 
@@ -20,6 +21,9 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({ post_id, post }))
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 
 
+const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
+
+
 //리듀서가 사용할 initialState
 // const initialState = {
 //   list: [],
@@ -31,19 +35,20 @@ const initialState = {
   paging: { start: null, next: null, size: 3 },
   //지금 가져오는 중이니? 판별해줄 is_loading
   is_loading: false,
+  preview: null,
 };
 
 //게시글 하나에 대한(기본적으로 들어가야 할)내용
 const initialCard = {
   id: 0,
-  image_url: "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
-  user_name: "라푸",
+  image: "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
+  nickname: "라푸",
   title: "주인 팝니다",
-  contents: "말 안듣는 주인 바꿉니다",
+  content: "말 안듣는 주인 바꿉니다",
   price: "백마넌",
-  is_like: false,
-  like_cnt: 10,
-  insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+  date: moment().format("YYYY-MM-DD hh:mm:ss"),
+  // is_like: false,
+  // like_cnt: 10,
   // is_me: false,
 }
 
@@ -51,31 +56,42 @@ const initialCard = {
 const getCardDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get('http://localhost:4000/products')
+      .get('http://wanos.shop/api/product')
+      // .get('http://localhost:4000/product')
       .then((res) => {
         console.log(res);
-        //   let card_list = [];
 
         let _card = res.data;
-        //   let card = {
-        //       id: res.id,
-        //       user_name: _card.nickname,
-        //       contents: _card.content,
-        //       image_url: _card.image,
-        //       price: _card.price,
-        //       title: _card.title,
-        //       insert_dt: _card.date,
-        //   }
-
-        //   card_list.push(_card);
-
         console.log(_card);
 
         dispatch(setCard(_card));
         console.log(res.data);
-      });
+      }).catch(err => {
+        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+        console.log("에러 났어!");
+      })
   };
 };
+
+
+const addCardDB = (title, content, image, nickname, price) => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .post('http://localhost:4000/product',
+        { title, content, image, nickname, price },
+        // {headers:{}}
+      )
+      .then((res) => {
+        console.log(res);
+        let _card = res.data;
+        console.log(_card);
+
+        dispatch(addCard(_card));
+        console.log(res.data);
+        history.replace("/post");
+      });
+  }
+}
 
 const editPostDB = (post_id = null, post = {}) => {
   return function (dispatch, getState, { history }) {
@@ -107,10 +123,6 @@ const editPostDB = (post_id = null, post = {}) => {
           });
       }
     }
-
-
-
-
   }
 }
 
@@ -137,10 +149,12 @@ export default handleActions({
   [SET_CARD]: (state, action) => produce(state, (draft) => {
     draft.list.push(...action.payload.card_list)
   }),
-
   [ADD_CARD]: (state, action) => produce(state, (draft) => {
     //배열에 제일 앞에 붙이니까 unshift사용
-    draft.list.unshift(action.payload.post);
+    draft.list.unshift(action.payload.card);
+  }),
+  [SET_PREVIEW]: (state, action) => produce(state, (draft) => {
+    draft.preview = action.payload.preview;
   }),
   [EDIT_POST]: (state, action) =>
     produce(state, (draft) => {
@@ -172,10 +186,11 @@ const actionCreators = {
   setCard,
   addCard,
   getCardDB,
+  addCardDB,
+  setPreview,
   editPost,
   editPostDB,
   deletePost,
   deletePostDB,
 };
-
 export { actionCreators };

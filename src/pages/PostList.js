@@ -15,8 +15,6 @@ const PostList = (props) => {
 
     React.useEffect(() => {
         dispatch(cardActions.getCardDB());
-
-
     }, [])
 
     return (
@@ -32,6 +30,7 @@ const PostList = (props) => {
                 is_float
                 _onClick={() => {
                     console.log("게시글 작성으로 가기");
+                    props.history.push("/write")
                 }}
             >
                 +

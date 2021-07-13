@@ -4,7 +4,9 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import Card from "./modules/card";
-// import Post from "./modules/post";
+
+import Image from "./modules/image";
+
 
 // history를 스토어에서도 쓸 수 있도록 
 export const history = createBrowserHistory();
@@ -12,9 +14,10 @@ export const history = createBrowserHistory();
 // 리듀서 여러개일 때 하나로 묶기
 const rootReducer = combineReducers({
   card: Card,
-  // post: Post,
+  image: Image,
   router: connectRouter(history),
 });
+
 
 // 비동기 갔다 와서 history사용 가능해짐 (.then 이후에 history 쓸 수 있음)
 const middlewares = [thunk.withExtraArgument({ history: history })];
