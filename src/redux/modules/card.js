@@ -13,6 +13,7 @@ const DELETE_POST = "DELETE_POST";
 //createAction(Action Creators 대신 편하고 쉽게 만들기)
 const setCard = createAction(SET_CARD, (card_list) => ({ card_list }));
 const addCard = createAction(ADD_CARD, (card) => ({ card }));
+
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 
 
