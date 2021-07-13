@@ -20,13 +20,14 @@ const PostWrite = (props) => {
     const card_list = useSelector((state) => state.card.list);
 
     const card_id = props.match.params.id;
+    // console.log(props) params가 없어...!
     const is_edit = card_id ? true : false;
 
     // console.log(card_id)
 
     const { history } = props;
 
-    let _card = is_edit ? card_list.find((p) => p.id === card_id) : null;
+    let _card = is_edit ? card_list.find((c) => c.id === card_id) : null;
 
     const [contents, setContents] = React.useState(_card ? _card.contents : "");
     const [title, setTitle] = React.useState(_card ? _card.title : "");
@@ -45,6 +46,7 @@ const PostWrite = (props) => {
 
     const addCard = () => {
         dispatch(cardActions.addCardDB(contents));
+        console.log(contents)
       };
 
     return (

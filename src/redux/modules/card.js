@@ -7,26 +7,28 @@ import moment from "moment";
 //Actions
 const SET_CARD = "SET_CARD";
 const ADD_CARD = "ADD_CARD";
+const SET_PREVIEW = "SET_PREVIEW";
 
 
 //createAction(Action Creators 대신 편하고 쉽게 만들기)
 const setCard = createAction(SET_CARD, (card_list) => ({card_list}));
 const addCard = createAction(ADD_CARD, (card) => ({card}));
-
+const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 
 //리듀서가 사용할 initialState
 const initialState = {
     list: [],
+    preview: null,
 }
 //게시글 하나에 대한(기본적으로 들어가야 할)내용
 const initialCard = {
     id: 0,
-    image_url:"https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
-    user_name: "라푸",
+    image:"https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
+    nickname: "라푸",
     title: "주인 팝니다",
-    contents: "말 안듣는 주인 바꿉니다",
+    content: "말 안듣는 주인 바꿉니다",
     price: "백마넌",
-    insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    date: moment().format("YYYY-MM-DD hh:mm:ss"),
     // is_like: false,
     // like_cnt: 10,
     // is_me: false,
@@ -80,6 +82,10 @@ export default handleActions({
         draft.list.unshift(action.payload.card);
     }),
 
+    [SET_PREVIEW]: (state, action) => produce(state, (draft) => {
+        draft.preview = action.payload.preview;
+      }),
+
 
 }, initialState)
 
@@ -90,6 +96,7 @@ const actionCreators = {
     addCard,
     getCardDB,
     addCardDB,
+    setPreview,
   };
   
 export { actionCreators };
