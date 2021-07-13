@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import Card from "./modules/card";
+
 import Image from "./modules/image";
 
 
@@ -12,13 +13,14 @@ export const history = createBrowserHistory();
 
 // 리듀서 여러개일 때 하나로 묶기
 const rootReducer = combineReducers({
-    card: Card,
-    image: Image,
-    router: connectRouter(history),
-  });
+  card: Card,
+  image: Image,
+  router: connectRouter(history),
+});
+
 
 // 비동기 갔다 와서 history사용 가능해짐 (.then 이후에 history 쓸 수 있음)
-const middlewares = [thunk.withExtraArgument({history:history})];
+const middlewares = [thunk.withExtraArgument({ history: history })];
 
 // 지금이 어느 환경인 지 알려줘요. (개발환경, 프로덕션(배포)환경 ...)
 const env = process.env.NODE_ENV;
@@ -32,8 +34,8 @@ if (env === "development") {
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-      })
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+    })
     : compose;
 
 // 미들웨어 믂기
