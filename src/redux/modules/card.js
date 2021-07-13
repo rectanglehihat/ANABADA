@@ -38,7 +38,8 @@ const initialCard = {
 const getCardDB = () => {
     return function (dispatch, getState, { history }) {
     axios
-        .get('http://localhost:4000/product')
+        .get('http://wanos.shop/api/product')
+        // .get('http://localhost:4000/product')
         .then((res) => {
             console.log(res);
 
@@ -47,7 +48,10 @@ const getCardDB = () => {
 
             dispatch(setCard(_card));
             console.log(res.data);
-        });
+        }).catch(err => {
+			// 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+			console.log("에러 났어!");
+        })
     };
   };
 
