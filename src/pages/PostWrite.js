@@ -52,6 +52,10 @@ const PostWrite = (props) => {
         dispatch(cardActions.addCardDB(contents));
         console.log(contents)
       };
+    // 게시글 수정 함수
+    const editPost = () => {
+    dispatch(cardActions.editPostFB(card_id, { contents: contents }));
+        };
 
     React.useEffect(() => {
     // 수정모드인데 게시글 정보 없으면 경고를 띄우고 뒤로 가기

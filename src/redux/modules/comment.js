@@ -5,8 +5,6 @@ import moment from "moment";
 import { actionCreators as postActions } from "./card";
 import axios from "axios";
 
-
-
 // actions
 const SET_COMMENT = "SET_COMMENT";
 const ADD_COMMENT = "ADD_COMMENT";
