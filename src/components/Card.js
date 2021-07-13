@@ -1,61 +1,84 @@
 import React from "react";
+import { history } from "../redux/configureStore";
 
 import Grid from "../elements/Grid";
 import Text from "../elements/Text";
 import Input from "../elements/Input";
-import Image from "../elements/Image"
+import Image from "../elements/Image";
+import Button from "../elements/Button";
 
 import HeartButton from "./HeartButton";
 
+import { useDispatch } from "react-redux";
+import { actionCreators as cardActions } from "../redux/modules/card";
+
 
 const Card = (props) => {
-
-
+    const dispatch = useDispatch();
+    console.log(props)
 
     return(
         <React.Fragment>
-            <Grid padding="0px 100px" center>
-                <Text 
-                size="32px" 
-                bold 
-                margin="20px 0px" 
-                border="#222831 solid "
-                bw="0px 0px 10px 0px"
-                >상 품 상 세</Text>
-            </Grid>
 
-            <Grid padding="0px 100px" width="auto">
+            <Grid padding="20px 100px" width="auto">
 
                 <Grid padding="0 0 20px 0">
                     <Image shape="rectangle">{props.image}</Image>
                 </Grid>
 
-                <Grid is_flex width="auto" padding="0 0 20px 0">
-                    <Text bold width="100px">작성자</Text>
-                    <Text >{props.nickname}</Text>
-                </Grid>
-
-                <Grid is_flex width="auto" padding="0 0 20px 0">
-                    <Text bold>타이틀</Text>
-                    <Text >{props.title}</Text>
-                </Grid>
-
-                <Grid is_flex width="auto" padding="0 0 20px 0">
-                    <Text bold>가격</Text>
-                    <Text >{props.price}</Text>
-                </Grid>
-
-                <Grid is_flex width="auto" padding="0 0 20px 0">
-                    <Text bold>콘텐츠</Text>
-                    <Text >{props.content}</Text>
-                </Grid>
-
-                <Grid is_flex>
+                <Grid is-flex padding="0 0 20px 0">
                     <Grid is_flex width="auto">
-                        <HeartButton />
-                        <Text size="12px">{props.like_cnt}개</Text>
+                        <Grid is_flex width="auto">
+                            <Button width="auto" padding="5px" margin="0 4px 0 0" _onClick={() => 
+                                {props.history.push(`/write/${props.id}`)}}>
+                            수정</Button>
+
+                            <Button width="auto" padding="5px"
+                                _onClick={(e) => {
+                                    //  이벤트 캡쳐링과 버블링을 막아요!
+                                    // 이벤트 캡쳐링, 버블링이 뭔지 검색해보기! :)
+                                    e.preventDefault();
+                                    e.stopPropagation();
+
+                                    // 게시글 삭제하기
+                                    // 여기에서는 window.confirm 등을 사용해서 진짜 지우냐고 한 번 더 물어봐주면 정말 좋겠죠!
+                                    dispatch(cardActions.deletePostFB(props.id));
+                                }}
+                                >
+                                삭제
+                            </Button>
+                        </Grid>
+                        <Text>{props.date}</Text>
                     </Grid>
-                    <Image >보고있는 사람</Image>
+                    
+                </Grid>
+
+                <Grid is_flex padding="0 0 20px 0">
+                    <Grid is_flex width="auto" >
+                        <Text bold margin="0 20px 0 0">작성자</Text>
+                        <Text >{props.nickname}</Text>
+                    </Grid>
+                </Grid>
+
+                <Grid is_flex width="auto" padding="0 0 20px 0">
+                    <Grid is_flex width="auto" >
+                        <Text bold margin="0 20px 0 0">타이틀</Text>
+                        <Text >{props.title}</Text>
+                    </Grid>
+                </Grid>
+
+                <Grid is_flex width="auto" padding="0 0 20px 0">
+                    <Grid is_flex width="auto" >
+                        <Text bold margin="0 34px 0 0">가격</Text>
+                        <Text >{props.price}</Text>
+                    </Grid>
+                </Grid>
+
+                <Grid is_flex width="auto" padding="0 0 20px 0">
+                    <Grid is_flex width="auto" >
+                        <Text bold margin="0 20px 0 0">콘텐츠</Text>
+                        <Text >{props.content}</Text>
+                    </Grid>
                 </Grid>
             </Grid>
         </React.Fragment>

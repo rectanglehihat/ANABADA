@@ -7,28 +7,30 @@ import moment from "moment";
 //Actions
 const SET_CARD = "SET_CARD";
 const ADD_CARD = "ADD_CARD";
+const SET_PREVIEW = "SET_PREVIEW";
 
 
 //createAction(Action Creators 대신 편하고 쉽게 만들기)
 const setCard = createAction(SET_CARD, (card_list) => ({card_list}));
 const addCard = createAction(ADD_CARD, (card) => ({card}));
-
+const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 
 //리듀서가 사용할 initialState
 const initialState = {
     list: [],
+    preview: null,
 }
 //게시글 하나에 대한(기본적으로 들어가야 할)내용
 const initialCard = {
     id: 0,
-    image_url:"https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
-    user_name: "라푸",
+    image:"https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
+    nickname: "라푸",
     title: "주인 팝니다",
-    contents: "말 안듣는 주인 바꿉니다",
+    content: "말 안듣는 주인 바꿉니다",
     price: "백마넌",
-    is_like: false,
-    like_cnt: 10,
-    insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+    date: moment().format("YYYY-MM-DD hh:mm:ss"),
+    // is_like: false,
+    // like_cnt: 10,
     // is_me: false,
 }
 
@@ -36,31 +38,42 @@ const initialCard = {
 const getCardDB = () => {
     return function (dispatch, getState, { history }) {
     axios
-        .get('http://localhost:4000/products')
+        .get('http://wanos.shop/api/product')
+        // .get('http://localhost:4000/product')
         .then((res) => {
             console.log(res);
-        //   let card_list = [];
 
-          let _card = res.data;
-        //   let card = {
-        //       id: res.id,
-        //       user_name: _card.nickname,
-        //       contents: _card.content,
-        //       image_url: _card.image,
-        //       price: _card.price,
-        //       title: _card.title,
-        //       insert_dt: _card.date,
-        //   }
+            let _card = res.data;
+            console.log(_card);
 
-        //   card_list.push(_card);
-
-          console.log(_card);
-
-          dispatch(setCard(_card));
-          console.log(res.data);
-        });
+            dispatch(setCard(_card));
+            console.log(res.data);
+        }).catch(err => {
+			// 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+			console.log("에러 났어!");
+        })
     };
   };
+
+const addCardDB = (title, content, image, nickname, price) => {
+    return function (dispatch, getState, { history }) {
+    axios
+        .post('http://localhost:4000/product',
+            {title, content, image, nickname, price},
+            // {headers:{}}
+        )
+        .then((res) => {
+            console.log(res);
+
+            let _card = res.data;
+            console.log(_card);
+
+            dispatch(addCard(_card));
+            console.log(res.data);
+            history.replace("/post");
+        });
+    }
+}
 
 //handleActions(리듀서 대신 편하게 만들기)
 export default handleActions({
@@ -70,8 +83,12 @@ export default handleActions({
 
     [ADD_CARD]: (state, action) => produce(state, (draft) => {
         //배열에 제일 앞에 붙이니까 unshift사용
-        draft.list.unshift(action.payload.post);
+        draft.list.unshift(action.payload.card);
     }),
+
+    [SET_PREVIEW]: (state, action) => produce(state, (draft) => {
+        draft.preview = action.payload.preview;
+      }),
 
 
 }, initialState)
@@ -82,6 +99,8 @@ const actionCreators = {
     setCard,
     addCard,
     getCardDB,
+    addCardDB,
+    setPreview,
   };
   
 export { actionCreators };
