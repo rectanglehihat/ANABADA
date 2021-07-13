@@ -24,7 +24,7 @@ const Card = (props) => {
 
             <Grid padding="20px 100px" width="auto">
                 <Grid padding="0 0 20px 0">
-                    <Image shape="rectangle">{props.image}</Image>
+                    <Image shape="rectangle">{props.productImage}</Image>
                 </Grid>
 
                 <Grid is-flex padding="0 0 20px 0">
@@ -39,7 +39,7 @@ const Card = (props) => {
                                 dispatch(cardActions.deletePostDB(props.id));
                             }}>삭제</Button>
                         </Grid>
-                        <Text>{props.date}</Text>
+                        <Text>{props.createdAt}</Text>
                     </Grid>
 
                 </Grid>
@@ -47,7 +47,7 @@ const Card = (props) => {
                 <Grid is_flex padding="0 0 20px 0">
                     <Grid is_flex width="auto" >
                         <Text bold margin="0 20px 0 0">작성자</Text>
-                        <Text >{props.nickname}</Text>
+                        <Text >{props.name}</Text>
                     </Grid>
                 </Grid>
 

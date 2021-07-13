@@ -7,20 +7,14 @@ import moment from "moment";
 const SET_CARD = "SET_CARD";
 const ADD_CARD = "ADD_CARD";
 const SET_PREVIEW = "SET_PREVIEW";
-
 const EDIT_POST = "EDIT_CARD";
-
 const DELETE_POST = "DELETE_POST";
 
 //createAction(Action Creators 대신 편하고 쉽게 만들기)
 const setCard = createAction(SET_CARD, (card_list) => ({ card_list }));
 const addCard = createAction(ADD_CARD, (card) => ({ card }));
-
 const editPost = createAction(EDIT_POST, (post_id, post) => ({ post_id, post }))
-
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
-
-
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 
 
@@ -60,12 +54,9 @@ const getCardDB = () => {
       // .get('http://localhost:4000/product')
       .then((res) => {
         console.log(res);
-
-        let _card = res.data;
-        console.log(_card);
-
-        dispatch(setCard(_card));
         console.log(res.data);
+        dispatch(setCard(res.data.result));
+
       }).catch(err => {
         // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
         console.log("에러 났어!");
@@ -77,19 +68,20 @@ const getCardDB = () => {
 const addCardDB = (title, content, image, nickname, price) => {
   return function (dispatch, getState, { history }) {
     axios
-      .post('http://localhost:4000/product',
+      .post('http://wanos.shop/api/product/post',
         { title, content, image, nickname, price },
-        // {headers:{}}
+        {headers:{}}
       )
       .then((res) => {
         console.log(res);
-        let _card = res.data;
-        console.log(_card);
+        // console.log(res.data);
+        dispatch(addCard(res.data));
 
-        dispatch(addCard(_card));
-        console.log(res.data);
         history.replace("/post");
-      });
+      }).catch(err => {
+        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+        console.log("포스트 작성에 실패했습니다!");
+      })
   }
 }
 
@@ -126,7 +118,6 @@ const editPostDB = (post_id = null, post = {}) => {
   }
 }
 
-
 const deletePostDB = (id) => {
   return function (dispatch, getState, { history }) {
     axios
@@ -146,9 +137,12 @@ const deletePostDB = (id) => {
 
 //handleActions(리듀서 대신 편하게 만들기)
 export default handleActions({
-  [SET_CARD]: (state, action) => produce(state, (draft) => {
+  [SET_CARD]: (state, action) => {
+    console.log('빛민영')
+    return produce(state, (draft) => {
     draft.list.push(...action.payload.card_list)
-  }),
+  })
+},
   [ADD_CARD]: (state, action) => produce(state, (draft) => {
     //배열에 제일 앞에 붙이니까 unshift사용
     draft.list.unshift(action.payload.card);
