@@ -193,4 +193,4 @@ const actionCreators = {
   deletePost,
   deletePostDB,
 };
-export { actionCreators };
+export { actionCreators }
