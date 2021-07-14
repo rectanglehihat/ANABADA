@@ -11,10 +11,13 @@ const PostList = (props) => {
     const dispatch = useDispatch();
     const card_list = useSelector((state) => state.card.list)
 
-    console.log(card_list)
-
     React.useEffect(() => {
+
+        // 게시물이 있으면 새로 불러오지 않음(getCardDB 하지 않음). 기존 리덕스 자료 제일 앞에 추가됨.
+        // if(card_list === 0) {
+        // }
         dispatch(cardActions.getCardDB());
+        
     }, [])
 
     return (

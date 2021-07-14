@@ -42,7 +42,7 @@ const Header = (props) => {
                     margin="0px" 
                     size="24px" 
                     bold 
-                    _onClick={() => props.history.push("/")}>
+                    _onClick={() => {props.history.push("/")}}>
                         아나바다
                     </Text>
                 </Grid>

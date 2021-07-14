@@ -22,7 +22,7 @@ const PostWrite = (props) => {
     const card_list = useSelector((state) => state.card.list);
 
     const card_id = props.match.params.id;
-    // console.log(props) params가 없어...!
+    // console.log(props) //params가 없어...!
     const is_edit = card_id ? true : false;
     // console.log(card_id)
 
@@ -30,14 +30,19 @@ const PostWrite = (props) => {
 
     // 수정모드라면 게시글 정보 가져오기
     let _card = is_edit ? card_list.find((c) => c.id === card_id) : null;
+    // console.log(_card)
+    
 
-    const [contents, setContents] = React.useState(_card ? _card.contents : "");
+    // useState를 사용해서 텍스트 내용 저장
+    const [content, setContent] = React.useState(_card ? _card.content : "");
+    // console.log(contents)  아무것도 없어...!
     const [title, setTitle] = React.useState(_card ? _card.title : "");
     const [price, setPrice] = React.useState(_card ? _card.price : "");
+    const [image, setImage] = React.useState(_card ? _card.image : "");
 
     // 내용 바꿔주는 함수
     const changeContents = (e) => {
-        setContents(e.target.value);
+        setContent(e.target.value);
         // console.log(e.target.value)
     }
     const changeTitle = (e) => {
@@ -47,14 +52,25 @@ const PostWrite = (props) => {
         setPrice(e.target.value);
     }
 
-    // 게시글 추가 함수
+    const changeImage = (file) => {
+        setImage(file);
+        console.log(file)
+    }
+    // 게시글 추가 함수(card모듈에서 addCardDB부분의 파라미터가 동일하게 들어옴)
     const addCard = () => {
-        dispatch(cardActions.addCardDB(contents));
-        console.log(contents)
+
+        dispatch(cardActions.addCardDB(
+            "user_name", 
+            title, 
+            content, 
+            price,
+            image,
+        ));
       };
+ 
     // 게시글 수정 함수
     const editPost = () => {
-    dispatch(cardActions.editPostFB(card_id, { contents: contents }));
+    dispatch(cardActions.editPostFB(card_id, { content: content }));
         };
 
     React.useEffect(() => {
@@ -86,13 +102,12 @@ const PostWrite = (props) => {
                 </Grid>
                 
                 <Grid padding="0 0 20px 0">
-                    <Upload/>
+                    <Upload changeImage={changeImage}/>
                 </Grid>
                 
                 <Grid padding="0 0 20px 0">
                     <Image
                     shape="rectangle"
-                    // src={"http://via.placeholder.com/400x300"}
                     src={preview? preview : "http://via.placeholder.com/400x300"}
                     />
                 </Grid>
@@ -117,7 +132,7 @@ const PostWrite = (props) => {
                 <Input 
                     label="내용" 
                     multiLine
-                    value={contents}
+                    value={content}
                     _onChange={changeContents}
                     />
                 </Grid>
@@ -126,7 +141,7 @@ const PostWrite = (props) => {
                     {is_edit ? (
                         <Button 
                         padding="16px"
-                        _onClick={addCard}
+                        // _onClick={editPost}
                         >게시글 수정</Button>
                     ) : (
                         <Button 

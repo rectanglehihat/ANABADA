@@ -29,10 +29,16 @@ const Login = () => {
 
     return (
         <React.Fragment>
-            <Grid padding="16px">
-                <Text size="32px" bold>
-                    로그인
-                </Text>
+            <Grid padding="0px 100px">
+            <Grid center>
+                <Text 
+                    size="32px" 
+                    bold 
+                    margin="20px 0px" 
+                    border="#222831 solid "
+                    bw="0px 0px 10px 0px"
+                    >로 그 인</Text>
+            </Grid>
 
                 <Grid padding="16px 0px">
                     <Input
