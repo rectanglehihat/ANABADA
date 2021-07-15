@@ -17,7 +17,8 @@ import { actionCreators as cardActions } from "../redux/modules/card";
 
 const Card = (props) => {
     const dispatch = useDispatch();
-    console.log(props)
+    // 서버 게시글 목록 나옴
+    // console.log(props)
 
     return (
         <React.Fragment>
@@ -78,16 +79,16 @@ const Card = (props) => {
     )
 }
 
-Card.defaultProps = {
-    image_url: "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
-    user_name: "라푸",
-    title: "주인 팝니다",
-    contents: "말 안듣는 주인 바꿉니다",
-    price: "백마넌",
-    is_like: false,
-    like_cnt: 10,
-    is_me: false,
-    insert_dt: "2021-02-27 10:00:00",
-}
+// Card.defaultProps = {
+//     image_url: "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",
+//     user_name: "라푸",
+//     title: "주인 팝니다",
+//     contents: "말 안듣는 주인 바꿉니다",
+//     price: "백마넌",
+//     is_like: false,
+//     like_cnt: 10,
+//     is_me: false,
+//     insert_dt: "2021-02-27 10:00:00",
+// }
 
 export default Card;
