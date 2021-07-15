@@ -111,20 +111,30 @@ const addCardDB = (name, title, content, price, productImage) => {
       .then((res) => {
         console.log(res);
         console.log(res.data);
-        const new_post = {
-          title: res.data.title,
-          content: res.data.content,
-          price: res.data.price,
-          image: res.data.pruductImage,
-          // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+
+        // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
+        // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져오고
+        // 이미지를 도메인 주소+res.data.~로 넣어줘야 한다.
+
+        const new_card = {
+          id: res.data.result.productId,
+          name, 
+          title, 
+          content, 
+          price,
+          //이미지 주소 넣는 방법
+          productImage: 'http://wanos.shop/'+res.data.productImage
+        // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+
         }
-        dispatch(addCard(new_post));
+        dispatch(addCard(new_card));
 
         history.replace("/post");
-        // window.location.reload("/post");
+        // window.location.reload("");
       }).catch(err => {
         // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-        console.log("포스트 작성에 실패했습니다!");
+        console.log("상품게시물을 저장하지 못했습니다.");
+        window.alert("상품게시물을 저장하지 못했습니다.")
       })
   }
 }

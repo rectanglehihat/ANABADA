@@ -33,7 +33,7 @@ const PostList = (props) => {
             <Button
                 is_float
                 _onClick={() => {
-                    console.log("게시글 작성으로 가기");
+                    // console.log("게시글 작성으로 가기");
                     props.history.push("/write")
                 }}
             >

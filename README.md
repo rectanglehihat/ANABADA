@@ -1,24 +1,3 @@
-# 🤜 Delete 기능 완성 버전입니다~!
-
-### ./redux/modules/card.js
-이전 심화주차때의 post모듈이라고 생각하시면 될 것 같습니다 :) 포스트 하나하나 추가, 삭제, 수정하던 곳이요!  deletePost, deletePostDB를 중심으로 보시면 됩니다.
-
-### ./components/Card.js
-이전 심화주차때의 Post컴포넌트 역할을 하는 친구입니다. 삭제하기 버튼에 onclick 먹인거 중심으로 보시면 될 것 같아요!
-
-그리고 **꼭!** configureStore에서 rootReducer로 묶어주기!
-
-
-제가 git을 잘몰라서ㅎㅎㅎ 저같은 경우엔 그냥 안전하게 zip파일로 다운받고     
-yarn install로 모든 라이브러리 한번에 설치 진행 후 yarn start 하니 3000포트 잘 떴습니다!
-
-기능구현을 많이 하진 않았지만 일단 게시글 삭제부분은 어제 민영 튜터님과 함께 진행했으니 한번 참고 하시면 좋을거 같아요 :)
-
-포기하지 말고 우리 모두 화이탱~!~!
-
-
-
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
