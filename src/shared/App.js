@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "../redux/configureStore";
 
 import NotFound from "./NotFound";
 import Signup from "../pages/Signup";
@@ -11,6 +13,7 @@ import Login from "../pages/Login";
 import Header from "../components/Header";
 
 import GlobalStyles from "./GlobalStyles";
+import Main from "../pages/Main";
 
 
 function App() {
@@ -18,8 +21,9 @@ function App() {
     <React.Fragment>
       <GlobalStyles />
       <Header />
-      <BrowserRouter>
+      <ConnectedRouter history={history}>
         <Switch>
+          <Route path="/" exact component={Main} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/login" exact component={Login} />
           <Route path="/write" exact component={PostWrite} />
@@ -34,7 +38,7 @@ function App() {
             <NotFound history={props.history} />
           )} />
         </Switch>
-      </BrowserRouter>
+      </ConnectedRouter>
     </React.Fragment>
   );
 }
