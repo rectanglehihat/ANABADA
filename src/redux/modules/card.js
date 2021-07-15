@@ -3,6 +3,8 @@ import { produce } from "immer";
 import axios from "axios";
 import moment from "moment";
 
+import { actionCreators as imageActions } from "./image";
+
 //Actions
 const SET_CARD = "SET_CARD";
 const ADD_CARD = "ADD_CARD";
@@ -110,9 +112,9 @@ const addCardDB = (name, title, content, price, productImage) => {
           createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
         }
         dispatch(addCard(new_card));
-
+        dispatch(imageActions.setPreview(""));
         history.replace("/post");
-        // window.location.reload("");
+
       }).catch(err => {
         // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
         console.log("상품게시물을 저장하지 못했습니다.");
