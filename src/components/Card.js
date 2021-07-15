@@ -24,30 +24,40 @@ const Card = (props) => {
 
             <Grid padding="20px 100px" width="auto">
                 <Grid padding="0 0 20px 0">
-                    <Image shape="rectangle">{props.image}</Image>
+                    <Image shape="rectangle">{props.productImage}</Image>
                 </Grid>
 
                 <Grid is-flex padding="0 0 20px 0">
                     <Grid is_flex width="auto">
                         <Grid is_flex width="auto">
-                            <Button width="auto" padding="5px" margin="0 4px 0 0" _onClick={() => { props.history.push(`/write/${props.id}`) }}>
+                            <Button
+                                width="auto"
+                                padding="5px"
+                                margin="0 4px 0 0"
+                                _onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    history.push(`/write/${props.productId}`);
+                                }}
+                            >
                                 수정</Button>
-
-                            <Button width="auto" padding="5px" _onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                dispatch(cardActions.deletePostDB(props.id));
-                            }}>삭제</Button>
+                            <Button
+                                width="auto"
+                                padding="5px"
+                                _onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    dispatch(cardActions.deletePostDB(props.id));
+                                }}>삭제</Button>
                         </Grid>
-                        <Text>{props.date}</Text>
+                        <Text>{props.createdAt}</Text>
                     </Grid>
-
                 </Grid>
 
                 <Grid is_flex padding="0 0 20px 0">
                     <Grid is_flex width="auto" >
                         <Text bold margin="0 20px 0 0">작성자</Text>
-                        <Text >{props.nickname}</Text>
+                        <Text >{props.name}</Text>
                     </Grid>
                 </Grid>
 
@@ -83,7 +93,7 @@ Card.defaultProps = {
     user_name: "라푸",
     title: "주인 팝니다",
     contents: "말 안듣는 주인 바꿉니다",
-    price: "백마넌",
+    price: "백원땡처리",
     is_like: false,
     like_cnt: 10,
     is_me: false,

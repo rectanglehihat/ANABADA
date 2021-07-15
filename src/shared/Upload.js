@@ -21,6 +21,7 @@ const Upload = (props) => {
     // 파일 리더 객체를 사용해서 미리보기 넣어주기
     const reader = new FileReader();
     const file = fileInput.current.files[0];
+    //파일객체를 formdata로 쏴놓은거 있으니 내놓으세요
 
     // 파일 내용 읽어오기.
     reader.readAsDataURL(file);
