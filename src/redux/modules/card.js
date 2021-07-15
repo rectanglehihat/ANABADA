@@ -68,19 +68,6 @@ const getCardDB = () => {
 // 이 값들은 카드를 추가하는 곳인 PostWrite에도 동일하게 들어가야함
 const addCardDB = (name, title, content, price, productImage) => {
   return function (dispatch, getState, { history }) {
-    // const _card = {
-    //     ...initialCard,
-    //     name: name,
-    //     title: title,
-    //     content: content,
-    //     price: price,
-    //     productImage: productImage,
-    // }
-    // console.log({_card})
-    // name과 createAt밖에 나오지 않음
-    // postWrite에 파라미터가 동일하게 들어가 있지 않아서 그랬던 것.
-    // return
-
     const formData = new FormData();
     formData.append('name', name);
     formData.append('title', title);
@@ -96,12 +83,6 @@ const addCardDB = (name, title, content, price, productImage) => {
       // "Access-Control-Allow-Origin": "*",
     };
 
-    // axios
-    //   .post('http://wanos.shop/api/product/post',
-    //   formData,
-    //   {headers: headers }
-    //   )
-
     axios({
       method: 'post',
       url: 'http://wanos.shop/api/product/post',
@@ -115,17 +96,19 @@ const addCardDB = (name, title, content, price, productImage) => {
         // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
         // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져오고
         // 이미지를 도메인 주소+res.data.~로 넣어줘야 한다.
-
+        console.log(res.data.result.productImage);
         const new_card = {
           id: res.data.result.productId,
-          name, 
-          title, 
-          content, 
+          name,
+          title,
+          content,
           price,
           //이미지 주소 넣는 방법
-          productImage: 'http://wanos.shop/'+res.data.productImage
-        // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+          productImage: res.data.result.productImage
+          // 이미지 'http://wanos.shop/' + 
+          // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
 
+          // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
         }
         dispatch(addCard(new_card));
 
