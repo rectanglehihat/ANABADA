@@ -39,7 +39,7 @@ const PostWrite = (props) => {
     const [title, setTitle] = React.useState(_card ? _card.title : "");
     const [price, setPrice] = React.useState(_card ? _card.price : "");
     const [image, setImage] = React.useState(_card ? _card.image : "");
-    const [name, setName] = React.useState(_card ? _card.name : "");
+    // const [name, setName] = React.useState(_card ? _card.name : "");
 
     // 내용 바꿔주는 함수
     const changeContents = (e) => {
@@ -56,14 +56,14 @@ const PostWrite = (props) => {
         setImage(file);
         console.log(file)
     }
-    const changeName = (e) => {
-        setName(e.target.value)
-    }
+    // const changeName = (e) => {
+    //     setName(e.target.value)
+    // }
     // 게시글 추가 함수(card모듈에서 addCardDB부분의 파라미터가 동일하게 들어옴)
     const addCard = () => {
 
         dispatch(cardActions.addCardDB(
-            name, 
+            "user_name", 
             title, 
             content, 
             price,
@@ -115,13 +115,13 @@ const PostWrite = (props) => {
                     />
                 </Grid>
 
-                <Grid padding="10px 0px">
+                {/* <Grid padding="10px 0px">
                     <Input 
                     label="작성자"
                     value={name}
                     _onChange={changeName}
                     ></Input>
-                </Grid>
+                </Grid> */}
 
                 <Grid padding="10px 0px">
                     <Input 

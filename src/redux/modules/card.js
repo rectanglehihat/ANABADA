@@ -114,7 +114,7 @@ const addCardDB = (name, title, content, price, productImage) => {
 
         const new_card = {
           id: res.data.result.productId,
-          // name, 
+          name, 
           title, 
           content, 
           price,
