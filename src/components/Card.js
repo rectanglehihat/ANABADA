@@ -31,18 +31,28 @@ const Card = (props) => {
                 <Grid is-flex padding="0 0 20px 0">
                     <Grid is_flex width="auto">
                         <Grid is_flex width="auto">
-                            <Button width="auto" padding="5px" margin="0 4px 0 0" _onClick={() => { props.history.push(`/write/${props.id}`) }}>
+                            <Button
+                                width="auto"
+                                padding="5px"
+                                margin="0 4px 0 0"
+                                _onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    history.push(`/write/${props.productId}`);
+                                }}
+                            >
                                 수정</Button>
-
-                            <Button width="auto" padding="5px" _onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                dispatch(cardActions.deletePostDB(props.id));
-                            }}>삭제</Button>
+                            <Button
+                                width="auto"
+                                padding="5px"
+                                _onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    dispatch(cardActions.deletePostDB(props.id));
+                                }}>삭제</Button>
                         </Grid>
                         <Text>{props.createdAt}</Text>
                     </Grid>
-
                 </Grid>
 
                 <Grid is_flex padding="0 0 20px 0">
@@ -78,6 +88,7 @@ const Card = (props) => {
         </React.Fragment>
     )
 }
+
 
 // Card.defaultProps = {
 //     image_url: "https://blog.kakaocdn.net/dn/qM9y8/btqU92Jmx90/DWzhLUYbCiz7PldqnIB1gK/img.jpg",

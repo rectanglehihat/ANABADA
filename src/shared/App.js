@@ -27,6 +27,7 @@ function App() {
           <Route path="/signup" exact component={Signup} />
           <Route path="/login" exact component={Login} />
           <Route path="/write" exact component={PostWrite} />
+          <Route path="/write/:productId" exact component={PostWrite} />
           {/* 게시글 하나 상세 페이지 /url파라미터로 몇번째 상세에 와 있는지 파악 */}
           <Route path="/post/:id" exact component={PostDetail} />
           {/* 게시글 모두 나오는 전체 페이지 */}
@@ -36,7 +37,6 @@ function App() {
           <Route render={(props) => (
             <NotFound history={props.history} />
           )} />
-
         </Switch>
       </ConnectedRouter>
     </React.Fragment>
