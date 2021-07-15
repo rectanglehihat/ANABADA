@@ -39,7 +39,7 @@ const initialCard = {
   title: "",
   content: "",
   price: "",
-  createdAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+  createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
   // is_like: false,
   // like_cnt: 10,
   // is_me: false,
@@ -92,6 +92,7 @@ const addCardDB = (name, title, content, price, productImage) => {
       .then((res) => {
         console.log(res);
         console.log(res.data);
+
         // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
         // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져오고
         // 이미지를 도메인 주소+res.data.~로 넣어줘야 한다.
@@ -106,7 +107,7 @@ const addCardDB = (name, title, content, price, productImage) => {
           productImage: res.data.result.productImage,
           // 이미지 'http://wanos.shop/' + 
           // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
-          createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+          createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
         }
         dispatch(addCard(new_card));
 
@@ -169,7 +170,7 @@ const editPostDB = (productId = null, title, content, price, productImage, card 
           content,
           price,
           productImage: res.data.productImage,
-          // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+          createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
         }
         dispatch(editPost(productId, new_post));
         history.replace("/post");
