@@ -8,6 +8,9 @@ import Input from "../elements/Input";
 import Image from "../elements/Image";
 import Button from "../elements/Button";
 
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+
 import HeartButton from "./HeartButton";
 
 import { useDispatch } from "react-redux";
@@ -30,26 +33,28 @@ const Card = (props) => {
 
                 <Grid is-flex padding="0 0 20px 0">
                     <Grid is_flex width="auto">
-                        <Grid is_flex width="auto">
-                            <Button
+                        <Grid is_flex width="70px">
+                            <FaEdit
+                                size="30px"
                                 width="auto"
                                 padding="5px"
                                 margin="0 4px 0 0"
-                                _onClick={(e) => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     history.push(`/edit/${props.productId}`);
                                 }}
                             >
-                                수정</Button>
-                            <Button
+                                수정</FaEdit>
+                            <MdDelete
+                                size="30px"
                                 width="auto"
-                                padding="5px"
-                                _onClick={(e) => {
+                                margin-left="30px"
+                                onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     dispatch(cardActions.deletePostDB(props.id));
-                                }}>삭제</Button>
+                                }}>삭제</MdDelete>
                         </Grid>
                         <Text>{props.createdAt}</Text>
                     </Grid>

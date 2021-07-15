@@ -4,13 +4,17 @@ import './index.css';
 import App from './shared/App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
 
-import store from "./redux/configureStore";
+import store, { history } from "./redux/configureStore";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
-  </Provider>,
+    <ConnectedRouter history={history}>
+      <App />
+    </ConnectedRouter>
+  </Provider>
+  ,
   document.getElementById('root')
 );
 

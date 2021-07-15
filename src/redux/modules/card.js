@@ -92,7 +92,6 @@ const addCardDB = (name, title, content, price, productImage) => {
       .then((res) => {
         console.log(res);
         console.log(res.data);
-
         // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
         // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져오고
         // 이미지를 도메인 주소+res.data.~로 넣어줘야 한다.
@@ -104,11 +103,10 @@ const addCardDB = (name, title, content, price, productImage) => {
           content,
           price,
           //이미지 주소 넣는 방법
-          productImage: res.data.result.productImage
+          productImage: res.data.result.productImage,
           // 이미지 'http://wanos.shop/' + 
           // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
-
-          // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+          createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
         }
         dispatch(addCard(new_card));
 
