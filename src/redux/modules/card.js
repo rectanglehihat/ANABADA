@@ -13,7 +13,7 @@ const DELETE_POST = "DELETE_POST";
 //createAction(Action Creators 대신 편하고 쉽게 만들기)
 const setCard = createAction(SET_CARD, (card_list) => ({ card_list }));
 const addCard = createAction(ADD_CARD, (card) => ({ card }));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({ post_id, post }));
+const editPost = createAction(EDIT_POST, (id, post) => ({ id, post }));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 
@@ -26,6 +26,9 @@ const initialState = {
   //지금 가져오는 중이니? 판별해줄 is_loading
   is_loading: false,
   preview: null,
+  title: "",
+  price: "",
+  content: "",
 };
 
 //게시글 하나에 대한(기본적으로 들어가야 할)내용
@@ -65,19 +68,6 @@ const getCardDB = () => {
 // 이 값들은 카드를 추가하는 곳인 PostWrite에도 동일하게 들어가야함
 const addCardDB = (name, title, content, price, productImage) => {
   return function (dispatch, getState, { history }) {
-    // const _card = {
-    //     ...initialCard,
-    //     name: name,
-    //     title: title,
-    //     content: content,
-    //     price: price,
-    //     productImage: productImage,
-    // }
-    // console.log({_card})
-    // name과 createAt밖에 나오지 않음
-    // postWrite에 파라미터가 동일하게 들어가 있지 않아서 그랬던 것.
-    // return
-
     const formData = new FormData();
     formData.append('name', name);
     formData.append('title', title);
@@ -93,12 +83,6 @@ const addCardDB = (name, title, content, price, productImage) => {
       // "Access-Control-Allow-Origin": "*",
     };
 
-    // axios
-    //   .post('http://wanos.shop/api/product/post',
-    //   formData,
-    //   {headers: headers }
-    //   )
-
     axios({
       method: 'post',
       url: 'http://wanos.shop/api/product/post',
@@ -112,17 +96,19 @@ const addCardDB = (name, title, content, price, productImage) => {
         // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
         // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져오고
         // 이미지를 도메인 주소+res.data.~로 넣어줘야 한다.
-
+        console.log(res.data.result.productImage);
         const new_card = {
           id: res.data.result.productId,
-          name, 
-          title, 
-          content, 
+          name,
+          title,
+          content,
           price,
           //이미지 주소 넣는 방법
-          productImage: 'http://wanos.shop/'+res.data.productImage
-        // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+          productImage: res.data.result.productImage
+          // 이미지 'http://wanos.shop/' + 
+          // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
 
+          // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
         }
         dispatch(addCard(new_card));
 
@@ -137,35 +123,84 @@ const addCardDB = (name, title, content, price, productImage) => {
 }
 
 //28:31
-const editPostDB = (post_id = null, post = {}) => {
+const editPostDB = (productId = null, title, content, price, productImage, card = {}) => {
   return function (dispatch, getState, { history }) {
-
-    if (!post_id) {
+    if (!productId) {
       console.log("게시물 정보가 없어요!");
       return;
     }
 
-    const _image = getState.image.preview;
+    console.log(productId, title, content, price, productImage, card);
+    const _image = getState().image.preview;
+    const _post_idx = getState().card.list.findIndex(p => p.id === productId);
+    const _post = getState().card.list[_post_idx];
+    console.log(_post)
 
-    const _post_idx = getState().post.list.findIndex(p => p.id === post_id);
-    const _post = getState().post.list[_post_idx];
-    console.log(_post);
+    let _edit = {
+      title,
+      content,
+      price,
+      productImage,
+    };
+    console.log(_edit);
 
-    axios
-      .post(` http://wanos.shop/api/product/edit/${productId}`)
-      .then((res) => {
-        dispatch(editPost(post_id, post));
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    if (_image === _post.image_url) {
-
+    const headers = {
+      "Content-Type": "multipart/form-data",
     }
 
+    const formData = new FormData();
+    // formData.append('name', name);
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('price', price);
+    formData.append('image', productImage);
+    for (let key of formData.keys()) { console.log(key); }
+    for (var value of formData.values()) { console.log(value); }
 
+    axios({
+      method: 'PUT',
+      url: `http://wanos.shop/api/product/edit/${productId}`,
+      data: formData,
+      headers: { headers },
+    })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        const new_post = {
+          title,
+          content,
+          price,
+          productImage: res.data.productImage,
+          // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+        }
+        dispatch(editPost(productId, new_post));
+        history.replace("/post");
+        // window.location.reload("/post");
+      }).catch(err => {
+        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+        console.log("포스트 작성에 실패했습니다!");
+      })
+
+    axios({
+      method: "PUT",
+      url: `http://wanos.shop/api/product/edit/${productId}`,
+      data: {
+        ..._edit,
+        // imgUrl: url,
+      },
+      headers: { headers }
+    })
+      .then((res) => {
+        let new_post_data = {
+          title,
+          content,
+          price,
+          productImage,
+        };
+        console.log(new_post_data)
+        // dispatch(editPost(new_post_data, post_id, post));
+        window.alert("수정 되었습니다!");
+      })
   }
 }
 
@@ -186,6 +221,24 @@ const deletePostDB = (id) => {
   }
 }
 
+const getOnePostDB = (id) => {
+  return function (dispatch, getState, { history }) {
+    axios({
+      method: "get",
+      url: `http://wanos.shop/api/product/${id}`,
+    })
+      .then((res) => {
+        console.log(res.data);
+        const onePost = res.data.post;
+        console.log(onePost);
+        dispatch(getCardDB(onePost));
+      })
+      .catch((err) => {
+        console.log("에러", err);
+      });
+  };
+};
+
 //handleActions(리듀서 대신 편하게 만들기)
 export default handleActions({
   [SET_CARD]: (state, action) => {
@@ -201,7 +254,7 @@ export default handleActions({
     draft.preview = action.payload.preview;
   }),
   [EDIT_POST]: (state, action) => produce(state, (draft) => {
-    let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+    let idx = draft.list.findIndex((p) => p.id === action.payload.id);
     draft.list[idx] = { ...draft.list[idx], ...action.payload.post }
   }),
   [DELETE_POST]: (state, action) => {
@@ -225,6 +278,7 @@ const actionCreators = {
   setCard,
   addCard,
   getCardDB,
+  getOnePostDB,
   addCardDB,
   setPreview,
   editPost,

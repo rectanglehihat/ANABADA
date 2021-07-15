@@ -26,6 +26,7 @@ const PostWrite = (props) => {
 
     //주소창에서 id를 가지고 있는 아이
     const card_id = props.match.params.id;
+    console.log(card_id)
 
     const is_edit = card_id ? true : false;
 
@@ -66,7 +67,6 @@ const PostWrite = (props) => {
     // }
     // 게시글 추가 함수(card모듈에서 addCardDB부분의 파라미터가 동일하게 들어옴)
     const addCard = () => {
-
         dispatch(cardActions.addCardDB(
             "user_name",
             title,
@@ -78,20 +78,28 @@ const PostWrite = (props) => {
 
     // 게시글 수정 함수
     const editPost = () => {
-        dispatch(cardActions.editPostFB(card_id, { content: content }));
+        dispatch(cardActions.editPostDB(
+            card_id,
+            title,
+            content,
+            price,
+            image));
     };
 
 
     React.useEffect(() => {
         // 수정모드인데 게시글 정보 없으면 경고를 띄우고 뒤로 가기
         if (is_edit && !_card) {
+            // dispatch(cardActions.getOnePostDB(_card.content, _card.title, _card.price));
             window.alert("포스트 정보가 없어요!");
             history.goBack();
             return;
         }
+        console.log(is_edit);
         // 수정모드라면 이미지 미리보기도 하나 넣어주기
         if (is_edit) {
-            dispatch(imageActions.setPreview(_card.image_url));
+            console.log(_card);
+            dispatch(imageActions.setPreview('http://wanos.shop/' + _card.productImage));
         }
     }, []);
 
@@ -146,7 +154,6 @@ const PostWrite = (props) => {
                 </Grid>
 
                 <Grid padding="10px 0px">
-
                     <Input
                         label="내용"
                         multiLine

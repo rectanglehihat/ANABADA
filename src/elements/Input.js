@@ -20,7 +20,7 @@ import Image from "./Image"
  * @returns 
  */
 const Input = (props) => {
-  const {label, placeholder, _onChange, type, multiLine, value, is_submit, onSubmit, centerCircle} = props;
+  const { label, placeholder, _onChange, type, multiLine, value, is_submit, onSubmit, centerCircle } = props;
 
   if (multiLine) {
     return (
@@ -53,7 +53,7 @@ const Input = (props) => {
             }}
           />
         ) : (
-          <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+          <ElInput type={type} placeholder={placeholder} onChange={_onChange} value={value} />
         )}
       </Grid>
     </React.Fragment>
@@ -67,8 +67,8 @@ Input.defaultProps = {
   type: "text",
   value: "",
   is_submit: false,
-  onSubmit: () => {},
-  _onChange: () => {},
+  onSubmit: () => { },
+  _onChange: () => { },
 };
 
 const ElTextarea = styled.textarea`

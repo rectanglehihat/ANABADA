@@ -17,7 +17,7 @@ const PostList = (props) => {
         // if(card_list === 0) {
         // }
         dispatch(cardActions.getCardDB());
-        
+
     }, [])
 
     return (
@@ -25,7 +25,8 @@ const PostList = (props) => {
             <Grid>
                 {/* c는 게시글에 대한 모든 정보 들어감 */}
                 {card_list.map((c, idx) => {
-                    return <Card key={c.id} {...c} />
+                    console.log(c);
+                    return <Card key={c.id} {...c} productImage={'http://wanos.shop/' + c.productImage} />
                 })}
             </Grid>
 
