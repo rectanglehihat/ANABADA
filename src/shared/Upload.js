@@ -19,6 +19,7 @@ const Upload = (props) => {
     // 파일 리더 객체를 사용해서 미리보기 넣어주기
     const reader = new FileReader();
     const file = fileInput.current.files[0];
+
     //파일객체 넘겨주기
     console.log(file)
     props.changeImage(file)
@@ -34,7 +35,7 @@ const Upload = (props) => {
   };
 
   // const uploadImageDB = (e) => {
-    
+
   //   let files = fileInput.current.files[0];
 
   //   const formdata = new FormData();

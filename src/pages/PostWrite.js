@@ -1,3 +1,6 @@
+// 1. 리덕스에서 필요한거 가져오기 (useSelector)
+// 2. 자식한테 넘겨주기
+
 import React from "react";
 import styled from "styled-components";
 
@@ -21,21 +24,23 @@ const PostWrite = (props) => {
     const preview = useSelector((state) => state.image.preview);
     const card_list = useSelector((state) => state.card.list);
 
+    //주소창에서 id를 가지고 있는 아이
     const card_id = props.match.params.id;
-    // console.log(props) //params가 없어...!
+
     const is_edit = card_id ? true : false;
-    // console.log(card_id)
 
     const { history } = props;
 
-    // 수정모드라면 게시글 정보 가져오기
+    // 수정모드라면 원래의 게시글 정보 가져오기_리덕스에서 가져오기. 데이터 없으면(다 공란이면) 바로 포스트리스트로 돌아가게끔하기
     let _card = is_edit ? card_list.find((c) => c.id === card_id) : null;
+
     // console.log(_card)
-    
+
 
     // useState를 사용해서 텍스트 내용 저장
     const [content, setContent] = React.useState(_card ? _card.content : "");
     // console.log(contents)  아무것도 없어...!
+
     const [title, setTitle] = React.useState(_card ? _card.title : "");
     const [price, setPrice] = React.useState(_card ? _card.price : "");
     const [image, setImage] = React.useState(_card ? _card.image : "");
@@ -63,55 +68,56 @@ const PostWrite = (props) => {
     const addCard = () => {
 
         dispatch(cardActions.addCardDB(
-            "user_name", 
-            title, 
-            content, 
+            "user_name",
+            title,
+            content,
             price,
             image,
         ));
-      };
- 
+    };
+
     // 게시글 수정 함수
     const editPost = () => {
-    dispatch(cardActions.editPostFB(card_id, { content: content }));
-        };
+        dispatch(cardActions.editPostFB(card_id, { content: content }));
+    };
+
 
     React.useEffect(() => {
-    // 수정모드인데 게시글 정보 없으면 경고를 띄우고 뒤로 가기
-    if (is_edit && !_card) {
-        window.alert("포스트 정보가 없어요!");
-        history.goBack();
-
-        return;
-    }
-    // 수정모드라면 이미지 미리보기도 하나 넣어주기
-    if (is_edit) {
-        dispatch(imageActions.setPreview(_card.image_url));
-      }
+        // 수정모드인데 게시글 정보 없으면 경고를 띄우고 뒤로 가기
+        if (is_edit && !_card) {
+            window.alert("포스트 정보가 없어요!");
+            history.goBack();
+            return;
+        }
+        // 수정모드라면 이미지 미리보기도 하나 넣어주기
+        if (is_edit) {
+            dispatch(imageActions.setPreview(_card.image_url));
+        }
     }, []);
 
     return (
         <React.Fragment>
-
             <Grid padding="0px 100px">
                 <Grid center>
-                    <Text 
-                        size="32px" 
-                        bold 
-                        margin="20px 0px" 
+                    <Text
+                        size="32px"
+                        bold
+                        margin="20px 0px"
                         border="#222831 solid"
                         bw="0px 0px 10px 0px"
                     >{is_edit ? "상 품 수 정" : "상 품 작 성"}</Text>
                 </Grid>
-                
+
                 <Grid padding="0 0 20px 0">
-                    <Upload changeImage={changeImage}/>
+
+                    <Upload changeImage={changeImage} />
+
                 </Grid>
-                
+
                 <Grid padding="0 0 20px 0">
                     <Image
-                    shape="rectangle"
-                    src={preview? preview : "http://via.placeholder.com/400x300"}
+                        shape="rectangle"
+                        src={preview ? preview : "http://via.placeholder.com/400x300"}
                     />
                 </Grid>
 
@@ -124,46 +130,48 @@ const PostWrite = (props) => {
                 </Grid> */}
 
                 <Grid padding="10px 0px">
-                    <Input 
-                    label="타이틀"
-                    value={title}
-                    _onChange={changeTitle}
+                    <Input
+                        label="타이틀"
+                        value={title}
+                        _onChange={changeTitle}
                     ></Input>
                 </Grid>
 
                 <Grid padding="10px 0px">
-                    <Input 
-                    label="가격"
-                    value={price}
-                    _onChange={changePrice}
+                    <Input
+                        label="가격"
+                        value={price}
+                        _onChange={changePrice}
                     ></Input>
                 </Grid>
 
                 <Grid padding="10px 0px">
-                <Input 
-                    label="내용" 
-                    multiLine
-                    value={content}
-                    _onChange={changeContents}
+
+                    <Input
+                        label="내용"
+                        multiLine
+                        value={content}
+                        _onChange={changeContents}
                     />
                 </Grid>
 
                 <Grid padding="10px 0px 30px 0">
                     {is_edit ? (
-                        <Button 
-                        padding="16px"
-                        // _onClick={editPost}
+
+                        <Button
+                            padding="16px"
+                            _onClick={editPost}
                         >게시글 수정</Button>
                     ) : (
-                        <Button 
-                        padding="16px"
-                        _onClick={addCard}
+                        <Button
+                            padding="16px"
+                            _onClick={addCard}
                         >게시글 등록</Button>
-                        )}
+                    )}
                 </Grid>
-            </Grid>
+            </Grid >
 
-        </React.Fragment>
+        </React.Fragment >
     )
 }
 

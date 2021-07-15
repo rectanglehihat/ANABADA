@@ -7,18 +7,18 @@ import moment from "moment";
 const SET_CARD = "SET_CARD";
 const ADD_CARD = "ADD_CARD";
 const SET_PREVIEW = "SET_PREVIEW";
-const EDIT_POST = "EDIT_CARD";
+const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 
 //createAction(Action Creators 대신 편하고 쉽게 만들기)
 const setCard = createAction(SET_CARD, (card_list) => ({ card_list }));
 const addCard = createAction(ADD_CARD, (card) => ({ card }));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({ post_id, post }))
+const editPost = createAction(EDIT_POST, (post_id, post) => ({ post_id, post }));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 
 
-//리듀서가 사용할 initialState
+
 const initialState = {
   list: [],
   //시작점, 다음거 넣을 null과 몇개씩 가져올지 size
@@ -44,27 +44,27 @@ const initialCard = {
 
 // middleware(비동기)
 const getCardDB = () => {
-    return function (dispatch, getState, { history }) {
-      axios
-        .get('http://wanos.shop/api/product')
-        // .get('http://localhost:4000/product')
-        .then((res) => {
-          console.log(res);
-          console.log(res.data);
-          dispatch(setCard(res.data.result));
-  
-        }).catch(err => {
-          // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-          console.log("에러 났어!");
-        })
-    };
+  return function (dispatch, getState, { history }) {
+    axios
+      .get('http://wanos.shop/api/product')
+      // .get('http://localhost:4000/product')
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        dispatch(setCard(res.data.result));
+
+      }).catch(err => {
+        // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+        console.log("에러 났어!");
+      })
   };
+
+};
 
 // 카드를 하나 추가할 때, 들어가야할(필요한) 데이터를 파라미터로 넣어주기
 // 이 값들은 카드를 추가하는 곳인 PostWrite에도 동일하게 들어가야함
 const addCardDB = (name, title, content, price, productImage) => {
   return function (dispatch, getState, { history }) {
-
     // const _card = {
     //     ...initialCard,
     //     name: name,
@@ -76,7 +76,7 @@ const addCardDB = (name, title, content, price, productImage) => {
     // console.log({_card})
     // name과 createAt밖에 나오지 않음
     // postWrite에 파라미터가 동일하게 들어가 있지 않아서 그랬던 것.
-    // return 
+    // return
 
     const formData = new FormData();
     formData.append('name', name);
@@ -98,16 +98,17 @@ const addCardDB = (name, title, content, price, productImage) => {
     //   formData,
     //   {headers: headers }
     //   )
-  
-    axios({ 
-      method: 'post', 
-      url: 'http://wanos.shop/api/product/post', 
+
+    axios({
+      method: 'post',
+      url: 'http://wanos.shop/api/product/post',
       data: formData,
-      headers: {headers},
+      headers: { headers },
     })
       .then((res) => {
         console.log(res);
         console.log(res.data);
+
         // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
         // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져오고
         // 이미지를 도메인 주소+res.data.~로 넣어줘야 한다.
@@ -121,6 +122,7 @@ const addCardDB = (name, title, content, price, productImage) => {
           //이미지 주소 넣는 방법
           productImage: 'http://wanos.shop/'+res.data.productImage
         // createdAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+
         }
         dispatch(addCard(new_card));
 
@@ -134,36 +136,36 @@ const addCardDB = (name, title, content, price, productImage) => {
   }
 }
 
+//28:31
 const editPostDB = (post_id = null, post = {}) => {
   return function (dispatch, getState, { history }) {
+
     if (!post_id) {
       console.log("게시물 정보가 없어요!");
       return;
     }
-    // 프리뷰 이미지를 가져옵니다.
-    const _image = getState().image.preview;
 
-    // 수정하려는 게시글이 게시글 목록에서 몇 번째에 있나 확인합니다.
-    const _post_idx = getState().post.list.findIndex((p) => p.id === post_id);
+    const _image = getState.image.preview;
 
-    // 수정하려는 게시글 정보를 가져옵니다. (수정 전 정보)
+    const _post_idx = getState().post.list.findIndex(p => p.id === post_id);
     const _post = getState().post.list[_post_idx];
-
     console.log(_post);
 
-    const postDB = (post_id = null, post = {}) => {
-      return function (dispatch, getState, { history }) {
-        axios
-          .post(`http://localhost:4000/products/${post_id}`)
-          .then((res) => {
-            dispatch(editPost(post_id, post));
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+    axios
+      .post(` http://wanos.shop/api/product/edit/${productId}`)
+      .then((res) => {
+        dispatch(editPost(post_id, post));
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (_image === _post.image_url) {
+
     }
+
+
   }
 }
 
@@ -187,11 +189,10 @@ const deletePostDB = (id) => {
 //handleActions(리듀서 대신 편하게 만들기)
 export default handleActions({
   [SET_CARD]: (state, action) => {
-    console.log('빛민영')
     return produce(state, (draft) => {
-    draft.list.push(...action.payload.card_list)
-  })
-},
+      draft.list.push(...action.payload.card_list)
+    })
+  },
   [ADD_CARD]: (state, action) => produce(state, (draft) => {
     //배열의 제일 앞에 붙이니까 unshift사용
     draft.list.unshift(action.payload.card);
@@ -199,16 +200,11 @@ export default handleActions({
   [SET_PREVIEW]: (state, action) => produce(state, (draft) => {
     draft.preview = action.payload.preview;
   }),
-  [EDIT_POST]: (state, action) =>
-    produce(state, (draft) => {
-      // 배열의 몇 번째에 있는 지 찾습니다.
-      let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
-
-      // 해당 위치에 넣어줍니다.
-      draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
-    }),
+  [EDIT_POST]: (state, action) => produce(state, (draft) => {
+    let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+    draft.list[idx] = { ...draft.list[idx], ...action.payload.post }
+  }),
   [DELETE_POST]: (state, action) => {
-    console.log("사랑해여 민영쌤");
     return produce(state, (draft) => {
       let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
       console.log(idx);
